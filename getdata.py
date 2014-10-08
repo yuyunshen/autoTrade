@@ -16,8 +16,6 @@ r_kline100=urllib2.Request('http://market.huobi.com/staticmarket/btc_kline_100_j
 r_kline200=urllib2.Request('http://market.huobi.com/staticmarket/btc_kline_200_json.js')
 r_kline300=urllib2.Request('http://market.huobi.com/staticmarket/btc_kline_300_json.js')
 
-
-
 counter = 0
 while(1):
 
@@ -25,17 +23,20 @@ while(1):
     print counter
 	
     #open url
-    o_ticker = urllib2.urlopen(r_ticker)
-    o_depth = urllib2.urlopen(r_depth)
-    o_kline001=urllib2.urlopen(r_kline001) 
-    o_kline005=urllib2.urlopen(r_kline005)
-    o_kline015=urllib2.urlopen(r_kline015)
-    o_kline030=urllib2.urlopen(r_kline030)
-    o_kline060=urllib2.urlopen(r_kline060)
-    o_kline100=urllib2.urlopen(r_kline100)
-    o_kline200=urllib2.urlopen(r_kline200)
-    o_kline300=urllib2.urlopen(r_kline300)
-    
+    try:
+        o_ticker = urllib2.urlopen(r_ticker)
+        o_depth = urllib2.urlopen(r_depth)
+        o_kline001=urllib2.urlopen(r_kline001) 
+        o_kline005=urllib2.urlopen(r_kline005)
+        o_kline015=urllib2.urlopen(r_kline015)
+        o_kline030=urllib2.urlopen(r_kline030)
+        o_kline060=urllib2.urlopen(r_kline060)
+        o_kline100=urllib2.urlopen(r_kline100)
+        o_kline200=urllib2.urlopen(r_kline200)
+        o_kline300=urllib2.urlopen(r_kline300)
+    except Exception,e:
+        print type(e.reason) 
+
     #get content from response
     c_ticker = eval(o_ticker.read())
     c_depth = eval(o_depth.read())
@@ -66,7 +67,7 @@ while(1):
     #write to file
     datafile.write(str(result)+'\n')
 
-	#fetch data every 5 minutes
+    #fetch data every 5 minutes
     time.sleep(300)
 
 datafile.close()
